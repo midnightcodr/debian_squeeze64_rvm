@@ -13,16 +13,16 @@ rvm --default use 1.9.3
 
 # install latest stable rails
 curl -L https://get.rvm.io | bash -s stable --rails
-source /usr/local/rvm/scripts/rvm
 
 # javascript vm
 cd /tmp
 wget -O - http://nodejs.org/dist/v0.8.14/node-v0.8.14-linux-x64.tar.gz|tar xz
-cd node-v0.8.14-linux-x64
-rm ChangeLog README.md LICENSE
-rsync -a . /usr/local
-cd /tmp
-rm -rf node-v0.8.14-linux-x64/
+rsync -a --exclude ChangeLog --exclude README.md --exclude LICENSE /tmp/node-v0.8.14-linux-x64/ /usr/local
+rm -rf /tmp/node-v0.8.14-linux-x64/
+cd -
 
 # this solves the super slow problem when running dev server on LAN
 sed -i 's/:DoNotReverseLookup => nil/:DoNotReverseLookup => true/' /usr/local/rvm/rubies/ruby-1.9.3-p286/lib/ruby/1.9.1/webrick/config.rb
+
+echo "Please run and add the following to your shell init file (.bashrc, for example) to start using rails"
+echo "source /usr/local/rvm/scripts/rvm"
